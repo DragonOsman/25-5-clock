@@ -1,0 +1,25 @@
+{
+  "name": "25-5-clock-project",
+  "version": "1.0.0",
+  "description": "My solution to FreeCodeCamp Front-End Libraries Projects' 25 + 5 Clock Project challenge",
+  "main": "scripts/script.js",
+  "scripts": {
+    "sass": "sass --watch scss/style.scss styles/style.css"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DragonOsman/25-5-clock.git"
+  },
+  "keywords": [
+    "25-50-clock",
+    "pomodoro-clock",
+    "jquery",
+    "freecodecamp-project"
+  ],
+  "author": "Osman Zakir",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/DragonOsman/25-5-clock/issues"
+  },
+  "homepage": "https://github.com/DragonOsman/25-5-clock#readme"
+}
