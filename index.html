@@ -11,8 +11,26 @@
 <body>
   <main>
     <h1>DragonOsman 25 + 5 Clock</h1>
-    <div id="break-label">Break Length</div>
-    <div id="session-label">Session Length</div>
+    <div id="break-label">
+      Break Length
+      <p id="break-length">5</p>
+      <button id="break-decrement"></button>
+      <button id="break-increment"></button>
+    </div>
+    <div id="session-label">
+      Session Length
+      <p id="session-length">25</p>
+      <button id="session-decrement"></button>
+      <button id="session-increment"></button>
+    </div>
+    <div id="timer">
+      <!--"timer type" refers to whether it's a session or a break; will change 
+        using JavaScript as needed-->
+      <p id="timer-type">Session</p>
+      <p id="time-left">25:00</p>
+    </div>
+    <button id="start_stop"></button>
+    <button id="reset"></button>
   </main>
   <script
     src="https://code.jquery.com/jquery-3.5.1.min.js"
