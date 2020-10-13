@@ -7,30 +7,34 @@
   <meta name="author" content="Osman Zakir" />
   <title>DragonOsman 25 + 5 Clock Project</title>
   <link rel="stylesheet" href="styles/style.css" />
+  <script 
+    src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"
+    crossorigin="use-credentials">
+  </script>
 </head>
 <body>
   <main>
     <h1>DragonOsman 25 + 5 Clock</h1>
-    <div id="break-label">
+    <div id="break-label" class="break-label">
       Break Length
-      <p id="break-length">5</p>
-      <button id="break-decrement"></button>
-      <button id="break-increment"></button>
+      <p id="break-length" class="break-length">5</p>
+      <button id="break-decrement" class="break-decrement"></button>
+      <button id="break-increment" class="break-increment"></button>
     </div>
-    <div id="session-label">
+    <div id="session-label" class="session-label">
       Session Length
-      <p id="session-length">25</p>
-      <button id="session-decrement"></button>
-      <button id="session-increment"></button>
+      <p id="session-length" class="session-length">25</p>
+      <button id="session-decrement" class="session-decrement"></button>
+      <button id="session-increment" class="session-increment"></button>
     </div>
-    <div id="timer">
+    <div id="timer" class="timer">
       <!--"timer type" refers to whether it's a session or a break; will change 
         using JavaScript as needed-->
-      <p id="timer-type">Session</p>
-      <p id="time-left">25:00</p>
+      <p class="timer-type">Session</p>
+      <p id="time-left" class="time-left">25:00</p>
     </div>
-    <button id="start_stop"></button>
-    <button id="reset"></button>
+    <button id="start_stop" class="start_stop"></button>
+    <button id="reset" class="reset"></button>
   </main>
   <script
     src="https://code.jquery.com/jquery-3.5.1.min.js"
