@@ -35,6 +35,7 @@ module.exports = {
     "eqeqeq": "error",
     "prefer-const": "error",
     "no-var": "error",
-    "space-before-function-paren": "off"
+    "space-before-function-paren": "off",
+    "no-undef": "warn"
   }
 };
