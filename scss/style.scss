@@ -1,8 +1,43 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  display: grid;
+  grid-template-areas: 
+  "break-label break-label session-label session-label"
+  "timer timer timer timer timer"
+  "start-stop start-stop start-stop start-stop"
+  "reset reset reset reset";
+}
+
+.break-label {
+  grid-area: break-label;
+}
+
+.session-label {
+  grid-area: session-label;
+}
+
+.start_stop {
+  grid-area: start-stop;
+}
+
 .reset {
-  padding-bottom: 0;
-  margin-bottom: 0;
-  
-  img {
+  grid-area: reset-button;
+}
+
+.timer {
+  grid-area: timer;
+}
+
+.reset {
+  & img {
     width: 16px;
     height: 16px;
   }
