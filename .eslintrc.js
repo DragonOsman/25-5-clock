@@ -4,7 +4,10 @@ module.exports = {
     "browser": true,
     "es6": true
   },
-  "extends": "eslint:recommended",
+  "extends": [
+    "eslint:recommended",
+    "standard",
+    "jquery"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
