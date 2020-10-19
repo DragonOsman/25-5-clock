@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/DragonOsman/25-5-clock/issues"
   },
-  "homepage": "https://github.com/DragonOsman/25-5-clock#readme"
+  "homepage": "https://github.com/DragonOsman/25-5-clock#readme",
+  "devDependencies": {
+    "eslint-config-jquery": "^3.0.0"
+  }
 }
