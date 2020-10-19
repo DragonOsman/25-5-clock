@@ -4,10 +4,7 @@ module.exports = {
     "browser": true,
     "es6": true
   },
-  "extends": [
-    "eslint:recommended",
-    "standard",
-    "jquery"],
+  "extends": ["jquery", "standard"],
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
@@ -39,6 +36,9 @@ module.exports = {
     "prefer-const": "error",
     "no-var": "error",
     "space-before-function-paren": "off",
-    "no-undef": "warn"
+    "no-undef": "warn",
+    "space-in-parens": "off",
+    "lines-around-comment": "off",
+    "no-unused-expressions": "warn"
   }
 };
