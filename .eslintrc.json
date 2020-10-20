@@ -1,39 +1,43 @@
-/* eslint-disable no-undef */
 {
-  "env": {
-      "browser": true,
-      "es6": true
-  },
-  "extends": [
-      "eslint:recommended",
-      "standard",
-      "jquery"
-  ],
-  "globals": {
-      "Atomics": "readonly",
-      "SharedArrayBuffer": "readonly"
-  },
-  "parserOptions": {
-      "ecmaVersion": 2020,
-      "parser": "babel"
-  },
-  "rules": {
-      "eqeqeq": "error",
-      "quotes": [
-          "error",
-          "double"
-      ],
-      "prefer-const": "error",
-      "no-var": "error",
-      "newline-before-return": "off",
-      "semi": [
-        2, 
-        "always"
-      ],
-      "no-extra-semi": "error",
-      "space-before-function-paren": "off",
-      "lines-around-comment": "warn",
-      "no-undef": "warn",
-      "no-unused-expressions": "warn"
-  }
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": ["jquery", "eslint:recommended"],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2020,
+        "sourceType": "script",
+        "parser": "babel"
+    },
+    "rules": {
+        "indent": [
+            "error",
+            2
+        ],
+        "linebreak-style": [
+            "error",
+            "windows"
+        ],
+        "quotes": [
+            "error",
+            "double"
+        ],
+        "semi": [
+            "error",
+            "always"
+        ],
+        "prefer-const": "error",
+        "no-var": "error",
+        "lines-around-comment": "off",
+        "space-before-function-paren": "off",
+        "no-undef": "warn",
+        "no-unused-expressions": "warn",
+        "eqeqeq": "error",
+        "yoda": "error",
+        "space-in-parens": "off"
+    }
 }
