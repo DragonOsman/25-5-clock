@@ -34,6 +34,23 @@ let timerId;
 const initializeClock = () => {
   if (!isClockRunning) {
     timerId = setInterval(() => {
+      if (secondsRemaining <= 0) {
+        $("#beep").click();
+        $("#beep").on("click", () => {
+          this.play();
+        });
+
+        if (isSessionRunning) {
+          isSessionRunning = false;
+          $("#timer-label").text("Break");
+          secondsRemaining = Number($("#break-length").text()) * 60;
+        } else {
+          isSessionRunning = true;
+          $("#timer-label").text("Session");
+          secondsRemaining = Number($("session-length").text()) * 60;
+        }
+      }
+
       isClockRunning = true;
       $("#session-increment").prop("disabled", true);
       $("#session-decrement").prop("disabled", true);
@@ -56,22 +73,6 @@ const initializeClock = () => {
     $("#break-decrement").prop("disabled", false);
   }
 };
-
-if (secondsRemaining <= 0 && (secondsRemaining * 1000) <= 0) {
-  clearInterval(timerId);
-  $("#beep").play();
-  timerTextContent = "00:00";
-  timerElem.text(timerTextContent);
-  if (isSessionRunning) {
-    isSessionRunning = false;
-    $("#timer-label").text("Break");
-    secondsRemaining = Number($("#break-length").text()) * 60;
-  } else {
-    isSessionRunning = true;
-    $("#timer-label").text("Session");
-    secondsRemaining = Number($("session-length").text()) * 60;
-  }
-}
 
 const startStopButton = $("#start_stop");
 startStopButton.on("click", initializeClock);
