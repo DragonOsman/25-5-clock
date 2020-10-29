@@ -1,7 +1,7 @@
 "use strict";
 
-let isSessionRunning = true;
 let isClockRunning = false;
+let isSessionRunning = true;
 
 const addLeadingZeroes = time => {
   return time < 10 ? `0${time}` : time;
@@ -11,19 +11,7 @@ const timerElem = $("#time-left");
 let timerTextContent = timerElem.text();
 const defaultSessionLength = "25";
 const defaultBreakLength = "5";
-let secondsRemaining = (isSessionRunning ?
-  parseInt(defaultSessionLength) :
-  parseInt(defaultBreakLength)) * 60;
-
-if (isSessionRunning && $("#session-length").text() !== defaultSessionLength) {
-  secondsRemaining = Number($("#session-length").text()) * 60;
-} else if (!isSessionRunning && $("#break-length").text() !== defaultBreakLength) {
-  secondsRemaining = Number($("#break-length").text()) * 60;
-}
-
-if (isSessionRunning && $("#break-length").text() !== defaultBreakLength) {
-  secondsRemaining = Number($("#session-length").text()) * 60;
-}
+let secondsRemaining = defaultSessionLength * 60;
 
 let minutes = parseInt(secondsRemaining / 60);
 let seconds = parseInt(secondsRemaining % 60);
@@ -34,21 +22,25 @@ let timerId;
 const initializeClock = () => {
   if (!isClockRunning) {
     timerId = setInterval(() => {
-      if (secondsRemaining <= 0) {
-        $("#beep").click();
-        $("#beep").on("click", () => {
-          this.play();
-        });
+      if (timerElem.text() === "00:00") {
+        const audioElem = document.getElementById("beep");
+        const playPromise = audioElem.play();
+        if ($("#beep").data("clicked")) {
+          playPromise.catch(err => console.log(err));
+        }
 
-        if (isSessionRunning) {
-          isSessionRunning = false;
-          $("#timer-label").text("Break");
-          secondsRemaining = Number($("#break-length").text()) * 60;
-        } else {
+        if (!isSessionRunning) {
           isSessionRunning = true;
           $("#timer-label").text("Session");
-          secondsRemaining = Number($("session-length").text()) * 60;
+        } else {
+          isSessionRunning = false;
+          $("#timer-label").text("Break");
         }
+
+        secondsRemaining = (isSessionRunning ?
+          Number($("#session-length").text()) :
+          Number($("#break-length").text())
+        ) * 60;
       }
 
       isClockRunning = true;
@@ -57,11 +49,11 @@ const initializeClock = () => {
       $("#break-increment").prop("disabled", true);
       $("#break-decrement").prop("disabled", true);
 
+      secondsRemaining--;
       minutes = parseInt(secondsRemaining / 60);
       seconds = parseInt(secondsRemaining % 60);
       timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
       timerElem.text(timerTextContent);
-      secondsRemaining--;
       console.log(secondsRemaining);
     }, 1000);
   } else {
@@ -77,6 +69,27 @@ const initializeClock = () => {
 const startStopButton = $("#start_stop");
 startStopButton.on("click", initializeClock);
 
+const resetButton = $("#reset");
+resetButton.on("click", () => {
+  $(this).data("clicked", true);
+
+  if (isClockRunning) {
+    clearInterval(timerId);
+  }
+
+  $("#beep").trigger("pause");
+  $("#beep").prop("currentTime", 0);
+
+  secondsRemaining = Number(defaultSessionLength) * 60;
+  minutes = parseInt(secondsRemaining / 60);
+  seconds = parseInt(secondsRemaining % 60);
+  timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+  timerElem.text(timerTextContent);
+  $("#session-length").text(defaultSessionLength);
+  $("#break-length").text(defaultBreakLength);
+  $("#timer-label").text("Session");
+});
+
 const breakIncrementButton = $("#break-increment");
 breakIncrementButton.on("click", () => {
   const lengthValueElem = $("#break-length");
@@ -84,13 +97,15 @@ breakIncrementButton.on("click", () => {
   if (lengthValue < 60) {
     lengthValue++;
     lengthValueElem.text(lengthValue.toString());
-    const minutes = (isSessionRunning) ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text());
-    timerTextContent = `${addLeadingZeroes(minutes)}:00`;
+    let minutes;
+    if ($("#timer-label").text() === "Session") {
+      minutes = Number($("#session-length").text());
+    } else {
+      minutes = Number($("#break-length").text());
+    }
+    secondsRemaining = minutes * 60;
+    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
     timerElem.text(timerTextContent);
-  } else if (lengthValue === 60) {
-    lengthValue;
   }
 });
 
@@ -101,13 +116,15 @@ breakDecrementButton.on("click", () => {
   if (lengthValue > 1) {
     lengthValue--;
     lengthValueElem.text(lengthValue.toString());
-    const minutes = (isSessionRunning) ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text());
-    timerTextContent = `${addLeadingZeroes(minutes)}:00`;
+    let minutes;
+    if ($("#timer-label").text() === "Session") {
+      minutes = Number($("#session-length").text());
+    } else {
+      minutes = Number($("#break-length").text());
+    }
+    secondsRemaining = minutes * 60;
+    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
     timerElem.text(timerTextContent);
-  } else if (lengthValue === 1) {
-    lengthValue;
   }
 });
 
@@ -118,13 +135,15 @@ sessionIncrementButton.on("click", () => {
   if (lengthValue < 60) {
     lengthValue++;
     lengthValueElem.text(lengthValue.toString());
-    const minutes = (isSessionRunning) ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text());
-    timerTextContent = `${addLeadingZeroes(minutes)}:00`;
+    let minutes;
+    if ($("#timer-label").text() === "Session") {
+      minutes = Number($("#session-length").text());
+    } else {
+      minutes = Number($("#break-length").text());
+    }
+    secondsRemaining = minutes * 60;
+    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
     timerElem.text(timerTextContent);
-  } else if (lengthValue === 60) {
-    lengthValue;
   }
 });
 
@@ -135,12 +154,14 @@ sessionDecrementButton.on("click", () => {
   if (lengthValue > 1) {
     lengthValue--;
     lengthValueElem.text(lengthValue.toString());
-    const minutes = (isSessionRunning) ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text());
-    timerTextContent = `${addLeadingZeroes(minutes)}:00`;
+    let minutes;
+    if ($("#timer-label").text() === "Session") {
+      minutes = Number($("#session-length").text());
+    } else {
+      minutes = Number($("#break-length").text());
+    }
+    secondsRemaining = minutes * 60;
+    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
     timerElem.text(timerTextContent);
-  } else if (lengthValue === 1) {
-    lengthValue;
   }
 });
