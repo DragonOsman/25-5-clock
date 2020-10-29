@@ -75,6 +75,7 @@ resetButton.on("click", () => {
 
   if (isClockRunning) {
     clearInterval(timerId);
+    isClockRunning = false;
   }
 
   $("#beep").trigger("pause");
