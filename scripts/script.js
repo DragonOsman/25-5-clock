@@ -15,10 +15,11 @@ const timerElem = $("#time-left");
 let timerTextContent = timerElem.text();
 const defaultSessionLength = 25;
 const defaultBreakLength = 5;
-let secondsRemaining = defaultSessionLength * 60;
+const secondsOffset = 60;
+let secondsRemaining = defaultSessionLength * secondsOffset;
 
-let minutes = parseInt(secondsRemaining / 60);
-let seconds = parseInt(secondsRemaining % 60);
+let minutes = parseInt(secondsRemaining / secondsOffset);
+let seconds = parseInt(secondsRemaining % secondsOffset);
 timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
 timerElem.text(timerTextContent);
 
@@ -50,8 +51,8 @@ const initializeClock = () => {
       $("#break-decrement").prop("disabled", true);
 
       secondsRemaining--;
-      minutes = parseInt(secondsRemaining / 60);
-      seconds = parseInt(secondsRemaining % 60);
+      minutes = parseInt(secondsRemaining / secondsOffset);
+      seconds = parseInt(secondsRemaining % secondsOffset);
       timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
       timerElem.text(timerTextContent);
       console.log(secondsRemaining);
@@ -81,9 +82,9 @@ resetButton.on("click", () => {
   $("#beep").trigger("pause");
   $("#beep").prop("currentTime", 0);
 
-  secondsRemaining = defaultSessionLength * 60;
-  minutes = parseInt(secondsRemaining / 60);
-  seconds = parseInt(secondsRemaining % 60);
+  secondsRemaining = defaultSessionLength * secondsOffset;
+  minutes = parseInt(secondsRemaining / secondsOffset);
+  seconds = parseInt(secondsRemaining % secondsOffset);
   timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
   timerElem.text(timerTextContent);
   $("#session-length").text(defaultSessionLength.toString());
@@ -102,11 +103,11 @@ breakIncrementButton.on("click", () => {
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
-    secondsRemaining = minutes * 60;
+    secondsRemaining = minutes * secondsOffset;
     timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
     timerElem.text(timerTextContent);
   } else {
-    secondsRemaining = minutes * 60;
+    secondsRemaining = minutes * secondsOffset;
     timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
     timerElem.text(timerTextContent);
   }
@@ -123,11 +124,11 @@ breakDecrementButton.on("click", () => {
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
-    secondsRemaining = Number(minutes * 60);
+    secondsRemaining = Number(minutes * secondsOffset);
     timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
     timerElem.text(timerTextContent);
   } else {
-    secondsRemaining = Number(minutes * 60);
+    secondsRemaining = Number(minutes * secondsOffset);
     timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
     timerElem.text(timerTextContent);
   }
@@ -144,12 +145,14 @@ sessionIncrementButton.on("click", () => {
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
-    secondsRemaining = Number(minutes * 60);
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
+    secondsRemaining = Number(minutes * secondsOffset);
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   } else {
-    secondsRemaining = Number(minutes * 60);
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
+    secondsRemaining = Number(minutes * secondsOffset);
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   }
 });
@@ -165,12 +168,14 @@ sessionDecrementButton.on("click", () => {
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
-    secondsRemaining = Number(minutes * 60);
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
+    secondsRemaining = Number(minutes * secondsOffset);
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   } else {
-    secondsRemaining = Number(minutes * 60);
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
+    secondsRemaining = Number(minutes * secondsOffset);
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   }
 });
