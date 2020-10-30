@@ -30,7 +30,7 @@ const initializeClock = () => {
       if (timerElem.text() === "00:00") {
         $("#beep").trigger("play");
 
-        if (!isSessionRunning) {
+        if ($("#timer-label").text() !== "Session") {
           isSessionRunning = true;
           $("#timer-label").text("Session");
         } else {
@@ -99,7 +99,7 @@ breakIncrementButton.on("click", () => {
   if (lengthValue < 60) {
     lengthValue++;
     lengthValueElem.text(lengthValue.toString());
-    minutes = (($("#timer-label").text() === "Session") ?
+    minutes = (isSessionRunning ?
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
@@ -120,7 +120,7 @@ breakDecrementButton.on("click", () => {
   if (lengthValue > 1) {
     lengthValue--;
     lengthValueElem.text(lengthValue.toString());
-    minutes = (($("#timer-label").text() === "Session") ?
+    minutes = (isSessionRunning ?
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
@@ -141,7 +141,7 @@ sessionIncrementButton.on("click", () => {
   if (lengthValue < 60) {
     lengthValue++;
     lengthValueElem.text(lengthValue.toString());
-    minutes = (($("#timer-label").text() === "Session") ?
+    minutes = (isSessionRunning ?
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
@@ -164,7 +164,7 @@ sessionDecrementButton.on("click", () => {
   if (lengthValue > 1) {
     lengthValue--;
     lengthValueElem.text(lengthValue.toString());
-    minutes = (($("#timer-label").text() === "Session") ?
+    minutes = (isSessionRunning ?
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
