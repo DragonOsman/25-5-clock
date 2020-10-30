@@ -41,7 +41,7 @@ const initializeClock = () => {
         secondsRemaining = (isSessionRunning ?
           Number($("#session-length").text()) :
           Number($("#break-length").text())
-        ) * 60;
+        ) * secondsOffset;
       }
 
       isClockRunning = true;
@@ -104,11 +104,13 @@ breakIncrementButton.on("click", () => {
       Number($("#break-length").text())
     );
     secondsRemaining = minutes * secondsOffset;
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   } else {
     secondsRemaining = minutes * secondsOffset;
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   }
 });
@@ -125,11 +127,13 @@ breakDecrementButton.on("click", () => {
       Number($("#break-length").text())
     );
     secondsRemaining = Number(minutes * secondsOffset);
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   } else {
     secondsRemaining = Number(minutes * secondsOffset);
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % 60)}`;
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   }
 });
