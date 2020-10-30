@@ -27,7 +27,7 @@ let timerId;
 const initializeClock = () => {
   if (!isClockRunning) {
     timerId = setInterval(() => {
-      if (timerElem.text() === "00:00") {
+      if (secondsRemaining === 0) {
         $("#beep").trigger("play");
 
         if ($("#timer-label").text() !== "Session") {
