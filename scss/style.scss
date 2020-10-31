@@ -1,44 +1,77 @@
 *,
 *::after,
 *::before {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 body {
   font-family: "Helvetica Neue", Arial, sans-serif;
-  display: grid;
-  grid-template-areas: 
-  "break-label break-label session-label session-label"
-  "timer timer timer timer timer"
-  "start-stop start-stop start-stop start-stop"
-  "reset reset reset reset";
-}
+  background-color: #708090;
+  color: #e7e9ec;
 
-.break-label {
-  grid-area: break-label;
-}
+  & main {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-.session-label {
-  grid-area: session-label;
-}
+    & .fas {
+      color: #e7e9ec;
+    }
 
-.start_stop {
-  grid-area: start-stop;
-}
+    & .session-label {
+      float: right;
+      font-size: 24px;
+    
+      & .session-length {
+        font-size: 20px;
+      }
+    
+      &::after {
+        clear: both;
+      }
+    }
 
-.reset {
-  grid-area: reset-button;
-}
+    & .break-label {
+      float: left;
+      font-size: 24px;
+    
+      & .break-length {
+        font-size: 20px;
+      }
+    
+      &::after {
+        clear: both;
+      }
+    }
 
-.timer {
-  grid-area: timer;
-}
+    & .timer, .timer-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-flow: column wrap;
+    
+      & .timer-label {
+        font-size: 25px;
+      }
+    
+      & .time-left {
+        font-size: 30px;
+        font-weight: 200;
+      }
+    }
+    
+    & .timer {
+      margin-top: 100px
+    }
 
-.reset {
-  & img {
-    width: 16px;
-    height: 16px;
+    button {
+      background: none;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
   }
 }
