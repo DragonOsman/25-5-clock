@@ -44,6 +44,13 @@ const initializeClock = () => {
         ) * secondsOffset;
       }
 
+      // To try to get it to start the timer with the correct value
+      // print the starting the time to the DOM each time the button is clicked
+      minutes = parseInt(secondsRemaining / secondsOffset);
+      seconds = parseInt(secondsRemaining % secondsOffset);
+      timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+      timerElem.text(timerTextContent);
+
       isClockRunning = true;
       $("#session-increment").prop("disabled", true);
       $("#session-decrement").prop("disabled", true);
@@ -68,7 +75,12 @@ const initializeClock = () => {
 };
 
 const startStopButton = $("#start_stop");
-startStopButton.on("click", initializeClock);
+startStopButton.on("click", () => {
+  // Try it here as well
+  timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+  timerElem.text(timerTextContent);
+  initializeClock();
+});
 
 const resetButton = $("#reset");
 resetButton.on("click", () => {
