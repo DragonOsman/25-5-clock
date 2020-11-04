@@ -138,12 +138,12 @@ breakDecrementButton.on("click", () => {
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
-    secondsRemaining = Number(minutes * secondsOffset);
+    secondsRemaining = minutes * secondsOffset;
     timerTextContent =
       `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   } else {
-    secondsRemaining = Number(minutes * secondsOffset);
+    secondsRemaining = minutes * secondsOffset;
     timerTextContent =
       `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
@@ -161,12 +161,12 @@ sessionIncrementButton.on("click", () => {
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
-    secondsRemaining = Number(minutes * secondsOffset);
+    secondsRemaining = minutes * secondsOffset;
     timerTextContent =
       `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   } else {
-    secondsRemaining = Number(minutes * secondsOffset);
+    secondsRemaining = minutes * secondsOffset;
     timerTextContent =
       `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
@@ -184,12 +184,12 @@ sessionDecrementButton.on("click", () => {
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
-    secondsRemaining = Number(minutes * secondsOffset);
+    secondsRemaining = minutes * secondsOffset;
     timerTextContent =
       `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   } else {
-    secondsRemaining = Number(minutes * secondsOffset);
+    secondsRemaining = minutes * secondsOffset;
     timerTextContent =
       `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
