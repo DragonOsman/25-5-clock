@@ -17,10 +17,16 @@ const defaultSessionLength = 25;
 const defaultBreakLength = 5;
 const secondsOffset = 60;
 let secondsRemaining = defaultSessionLength * secondsOffset;
+let minutes;
+let seconds;
 
-let minutes = parseInt(secondsRemaining / secondsOffset);
-let seconds = parseInt(secondsRemaining % secondsOffset);
-timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+const getTimerTextContent = (secondsRemaining) => {
+  minutes = parseInt(secondsRemaining / secondsOffset);
+  seconds = parseInt(secondsRemaining % secondsOffset);
+  timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+  return timerTextContent;
+};
+timerTextContent = getTimerTextContent(secondsRemaining);
 timerElem.text(timerTextContent);
 
 let timerId;
@@ -45,23 +51,13 @@ const initializeClock = () => {
         ) * secondsOffset;
       }
 
-      // To try to get it to start the timer with the correct value
-      // print the starting the time to the DOM each time the button is clicked
-      minutes = parseInt(secondsRemaining / secondsOffset);
-      seconds = parseInt(secondsRemaining % secondsOffset);
-      timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
-      timerElem.text(timerTextContent);
-
       isClockRunning = true;
       $("#session-increment").prop("disabled", true);
       $("#session-decrement").prop("disabled", true);
       $("#break-increment").prop("disabled", true);
       $("#break-decrement").prop("disabled", true);
 
-
-      minutes = parseInt(secondsRemaining / secondsOffset);
-      seconds = parseInt(secondsRemaining % secondsOffset);
-      timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+      timerTextContent = getTimerTextContent(secondsRemaining);
       timerElem.text(timerTextContent);
       console.log(secondsRemaining);
     }, 1000);
@@ -76,12 +72,7 @@ const initializeClock = () => {
 };
 
 const startStopButton = $("#start_stop");
-startStopButton.on("click", () => {
-  // Try it here as well
-  timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
-  timerElem.text(timerTextContent);
-  initializeClock();
-});
+startStopButton.on("click", initializeClock);
 
 const resetButton = $("#reset");
 resetButton.on("click", () => {
@@ -96,118 +87,77 @@ resetButton.on("click", () => {
   $("#beep").prop("currentTime", 0);
 
   secondsRemaining = defaultSessionLength * secondsOffset;
-  minutes = parseInt(secondsRemaining / secondsOffset);
-  seconds = parseInt(secondsRemaining % secondsOffset);
-  timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+  timerTextContent = getTimerTextContent(secondsRemaining);
   timerElem.text(timerTextContent);
   $("#session-length").text(defaultSessionLength.toString());
   $("#break-length").text(defaultBreakLength.toString());
   $("#timer-label").text("Session");
 });
 
+const updateTimer = (lengthValue, lengthValueElem) => {
+  lengthValueElem.text(lengthValue.toString());
+  minutes = (($("#timer-label").text() === "Session") ?
+    Number($("#session-length").text()) :
+    Number($("#break-length").text())
+  );
+  secondsRemaining = minutes * secondsOffset;
+  timerTextContent = `${addLeadingZeroes(minutes)}:00`;
+  timerElem.text(timerTextContent);
+};
+
+const justDisplayTimer = () => {
+  minutes = (($("#timer-label").text() === "Session") ?
+    Number($("#session-length").text()) :
+    Number($("#break-length").text())
+  );
+  secondsRemaining = minutes * secondsOffset;
+  timerTextContent =
+    `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
+  timerElem.text(timerTextContent);
+};
+
+const incrementLength = (lengthValue, lengthValueElem) => {
+  if (lengthValue < 60) {
+    lengthValue++;
+    updateTimer(lengthValue, lengthValueElem);
+  } else {
+    justDisplayTimer();
+  }
+};
+
+const decrementLength = (lengthValue, lengthValueElem) => {
+  if (lengthValue > 1) {
+    lengthValue--;
+    updateTimer(lengthValue, lengthValueElem);
+  } else {
+    justDisplayTimer();
+  }
+};
+
 const breakIncrementButton = $("#break-increment");
 breakIncrementButton.on("click", () => {
   const lengthValueElem = $("#break-length");
-  let lengthValue = Number(lengthValueElem.text());
-  if (lengthValue < 60) {
-    lengthValue++;
-    lengthValueElem.text(lengthValue.toString());
-    minutes = (($("#timer-label").text() === "Session") ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text())
-    );
-    secondsRemaining = minutes * secondsOffset;
-    timerTextContent = `${addLeadingZeroes(minutes)}:00`;
-    timerElem.text(timerTextContent);
-  } else {
-    minutes = (($("#timer-label").text() === "Session") ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text())
-    );
-    secondsRemaining = minutes * secondsOffset;
-    timerTextContent =
-      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
-    timerElem.text(timerTextContent);
-  }
+  const lengthValue = Number(lengthValueElem.text());
+  incrementLength(lengthValue, lengthValueElem);
 });
 
 const breakDecrementButton = $("#break-decrement");
 breakDecrementButton.on("click", () => {
   const lengthValueElem = $("#break-length");
-  let lengthValue = Number(lengthValueElem.text());
-  if (lengthValue > 1) {
-    lengthValue--;
-    lengthValueElem.text(lengthValue.toString());
-    minutes = (($("#timer-label").text() === "Session") ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text())
-    );
-    secondsRemaining = minutes * secondsOffset;
-    timerTextContent =
-      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
-    timerElem.text(timerTextContent);
-  } else {
-    minutes = (($("#timer-label").text() === "Session") ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text())
-    );
-    secondsRemaining = minutes * secondsOffset;
-    timerTextContent =
-      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
-    timerElem.text(timerTextContent);
-  }
+  const lengthValue = Number(lengthValueElem.text());
+  decrementLength(lengthValue, lengthValueElem);
 });
 
 const sessionIncrementButton = $("#session-increment");
 sessionIncrementButton.on("click", () => {
   const lengthValueElem = $("#session-length");
-  let lengthValue = lengthValueElem.text();
-  if (lengthValue < 60) {
-    lengthValue++;
-    lengthValueElem.text(lengthValue.toString());
-    minutes = (($("#timer-label").text() === "Session") ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text())
-    );
-    secondsRemaining = minutes * secondsOffset;
-    timerTextContent =
-      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
-    timerElem.text(timerTextContent);
-  } else {
-    minutes = (($("#timer-label").text() === "Session") ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text())
-    );
-    secondsRemaining = minutes * secondsOffset;
-    timerTextContent =
-      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
-    timerElem.text(timerTextContent);
-  }
+  const lengthValue = lengthValueElem.text();
+  incrementLength(lengthValue, lengthValueElem);
 });
 
 const sessionDecrementButton = $("#session-decrement");
 sessionDecrementButton.on("click", () => {
   const lengthValueElem = $("#session-length");
-  let lengthValue = lengthValueElem.text();
-  if (lengthValue > 1) {
-    lengthValue--;
-    lengthValueElem.text(lengthValue.toString());
-    minutes = (($("#timer-label").text() === "Session") ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text())
-    );
-    secondsRemaining = minutes * secondsOffset;
-    timerTextContent =
-      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
-    timerElem.text(timerTextContent);
-  } else {
-    minutes = (($("#timer-label").text() === "Session") ?
-      Number($("#session-length").text()) :
-      Number($("#break-length").text())
-    );
-    secondsRemaining = minutes * secondsOffset;
-    timerTextContent =
-      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
-    timerElem.text(timerTextContent);
-  }
+  const lengthValue = lengthValueElem.text();
+  decrementLength(lengthValue, lengthValueElem);
 });
