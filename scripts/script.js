@@ -45,11 +45,19 @@ const initializeClock = () => {
         ) * secondsOffset;
       }
 
+      // To try to get it to start the timer with the correct value
+      // print the starting the time to the DOM each time the button is clicked
+      minutes = parseInt(secondsRemaining / secondsOffset);
+      seconds = parseInt(secondsRemaining % secondsOffset);
+      timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+      timerElem.text(timerTextContent);
+
       isClockRunning = true;
       $("#session-increment").prop("disabled", true);
       $("#session-decrement").prop("disabled", true);
       $("#break-increment").prop("disabled", true);
       $("#break-decrement").prop("disabled", true);
+
 
       minutes = parseInt(secondsRemaining / secondsOffset);
       seconds = parseInt(secondsRemaining % secondsOffset);
@@ -68,7 +76,12 @@ const initializeClock = () => {
 };
 
 const startStopButton = $("#start_stop");
-startStopButton.on("click", initializeClock);
+startStopButton.on("click", () => {
+  // Try it here as well
+  timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+  timerElem.text(timerTextContent);
+  initializeClock();
+});
 
 const resetButton = $("#reset");
 resetButton.on("click", () => {
@@ -99,7 +112,7 @@ breakIncrementButton.on("click", () => {
   if (lengthValue < 60) {
     lengthValue++;
     lengthValueElem.text(lengthValue.toString());
-    minutes = (isSessionRunning ?
+    minutes = (($("#timer-label").text() === "Session") ?
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
@@ -107,9 +120,13 @@ breakIncrementButton.on("click", () => {
     timerTextContent = `${addLeadingZeroes(minutes)}:00`;
     timerElem.text(timerTextContent);
   } else {
-    minutes = secondsRemaining / secondsOffset;
-    seconds = secondsRemaining % secondsOffset;
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+    minutes = (($("#timer-label").text() === "Session") ?
+      Number($("#session-length").text()) :
+      Number($("#break-length").text())
+    );
+    secondsRemaining = minutes * secondsOffset;
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   }
 });
@@ -121,17 +138,22 @@ breakDecrementButton.on("click", () => {
   if (lengthValue > 1) {
     lengthValue--;
     lengthValueElem.text(lengthValue.toString());
-    minutes = (isSessionRunning ?
+    minutes = (($("#timer-label").text() === "Session") ?
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
     secondsRemaining = minutes * secondsOffset;
-    timerTextContent = `${addLeadingZeroes(minutes)}:00`;
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   } else {
-    minutes = secondsRemaining / secondsOffset;
-    seconds = secondsRemaining % secondsOffset;
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+    minutes = (($("#timer-label").text() === "Session") ?
+      Number($("#session-length").text()) :
+      Number($("#break-length").text())
+    );
+    secondsRemaining = minutes * secondsOffset;
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   }
 });
@@ -143,17 +165,22 @@ sessionIncrementButton.on("click", () => {
   if (lengthValue < 60) {
     lengthValue++;
     lengthValueElem.text(lengthValue.toString());
-    minutes = (isSessionRunning ?
+    minutes = (($("#timer-label").text() === "Session") ?
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
     secondsRemaining = minutes * secondsOffset;
-    timerTextContent = `${addLeadingZeroes(minutes)}:00`;
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   } else {
-    minutes = secondsRemaining / secondsOffset;
-    seconds = secondsRemaining % secondsOffset;
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+    minutes = (($("#timer-label").text() === "Session") ?
+      Number($("#session-length").text()) :
+      Number($("#break-length").text())
+    );
+    secondsRemaining = minutes * secondsOffset;
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   }
 });
@@ -165,17 +192,22 @@ sessionDecrementButton.on("click", () => {
   if (lengthValue > 1) {
     lengthValue--;
     lengthValueElem.text(lengthValue.toString());
-    minutes = (isSessionRunning ?
+    minutes = (($("#timer-label").text() === "Session") ?
       Number($("#session-length").text()) :
       Number($("#break-length").text())
     );
     secondsRemaining = minutes * secondsOffset;
-    timerTextContent = `${addLeadingZeroes(minutes)}:00`;
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   } else {
-    minutes = secondsRemaining / secondsOffset;
-    seconds = secondsRemaining % secondsOffset;
-    timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
+    minutes = (($("#timer-label").text() === "Session") ?
+      Number($("#session-length").text()) :
+      Number($("#break-length").text())
+    );
+    secondsRemaining = minutes * secondsOffset;
+    timerTextContent =
+      `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
     timerElem.text(timerTextContent);
   }
 });
