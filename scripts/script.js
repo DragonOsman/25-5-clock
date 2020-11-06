@@ -101,18 +101,8 @@ const updateTimer = (lengthValue, lengthValueElem) => {
     Number($("#break-length").text())
   );
   secondsRemaining = minutes * secondsOffset;
-  timerTextContent = `${addLeadingZeroes(minutes)}:00`;
-  timerElem.text(timerTextContent);
-};
-
-const justDisplayTimer = () => {
-  minutes = (($("#timer-label").text() === "Session") ?
-    Number($("#session-length").text()) :
-    Number($("#break-length").text())
-  );
-  secondsRemaining = minutes * secondsOffset;
-  timerTextContent =
-    `${addLeadingZeroes(minutes)}:${addLeadingZeroes(secondsRemaining % secondsOffset)}`;
+  seconds = secondsRemaining % secondsOffset;
+  timerTextContent = `${addLeadingZeroes(minutes)}:${addLeadingZeroes(seconds)}`;
   timerElem.text(timerTextContent);
 };
 
@@ -120,8 +110,6 @@ const incrementLength = (lengthValue, lengthValueElem) => {
   if (lengthValue < 60) {
     lengthValue++;
     updateTimer(lengthValue, lengthValueElem);
-  } else {
-    justDisplayTimer();
   }
 };
 
@@ -129,8 +117,6 @@ const decrementLength = (lengthValue, lengthValueElem) => {
   if (lengthValue > 1) {
     lengthValue--;
     updateTimer(lengthValue, lengthValueElem);
-  } else {
-    justDisplayTimer();
   }
 };
 
