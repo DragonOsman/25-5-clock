@@ -63,4 +63,26 @@ body main button {
   cursor: pointer;
 }
 
+@media screen and (max-width: 500px) {
+  main {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: center;
+    align-items: center;
+  }
+  main .timer {
+    margin-top: 25px;
+  }
+}
+@media screen and (min-width: 501px) and (max-width: 767px) {
+  main {
+    width: 500px;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  main {
+    width: 767px;
+  }
+}
+
 /*# sourceMappingURL=style.css.map */
